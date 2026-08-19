@@ -332,4 +332,502 @@
                 <span class="text-xs text-slate-500 font-bold">hrs/wk</span>
               </div>
             </div>
-            <input type="range"
+            <input type="range" id="otHours" min="0" max="60" step="1" value="8" class="w-full">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1 font-mono">
+              <span>0 hrs</span>
+              <span>10 hrs</span>
+              <span>20 hrs</span>
+              <span>40 hrs</span>
+              <span>60 hrs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Qualified Tips -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm transition-all hover:shadow-md">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xs border border-amber-200">
+                3
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-slate-900">Qualified Tipped Income</h2>
+                <p class="text-[11px] text-slate-400">Schedule 1-A Part II & Form W-2 Box 7 (Max $25,000 Cap)</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-mono" id="tipsCapBadge">
+              Max $25,000 Cap
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <label for="annualTipsNum" class="text-xs font-extrabold text-slate-700">
+                Estimated Annual Cash & Credit Card Tips
+              </label>
+              <p class="text-[10px] text-slate-400">Directly reported tips from eligible service occupations</p>
+            </div>
+            <div class="relative w-32">
+              <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-400 font-mono text-xs">$</span>
+              <input type="number" id="annualTipsNum" value="0" min="0" max="60000" step="500" class="w-full bg-slate-100 border border-slate-300 rounded-lg pl-6 pr-2 py-1 text-xs font-mono font-bold text-amber-800 text-right focus:bg-white focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            </div>
+          </div>
+          <input type="range" id="annualTips" min="0" max="50000" step="500" value="0" class="w-full">
+          <div class="flex justify-between text-[10px] text-slate-400 mt-1 font-mono">
+            <span>$0</span>
+            <span>$10,000</span>
+            <span class="text-amber-700 font-bold">$25,000 (Max Cap)</span>
+            <span>$35,000</span>
+            <span>$50,000</span>
+          </div>
+
+          <!-- Quick Add Buttons -->
+          <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 items-center">
+            <span class="text-[11px] text-slate-500 font-semibold">Quick Add:</span>
+            <button type="button" onclick="setTips(0)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] font-bold text-slate-700 transition cursor-pointer">$0 (No Tips)</button>
+            <button type="button" onclick="setTips(6000)" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-[11px] font-bold text-amber-800 border border-amber-200 transition cursor-pointer">$6,000/yr (Part-time)</button>
+            <button type="button" onclick="setTips(15000)" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-[11px] font-bold text-amber-800 border border-amber-200 transition cursor-pointer">$15,000/yr (Server)</button>
+            <button type="button" onclick="setTips(25000)" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-[11px] font-bold text-amber-800 border border-amber-200 transition cursor-pointer">$25,000/yr (Max Cap)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: RESULTS PANEL -->
+      <div class="lg:col-span-5 space-y-6">
+        <!-- Summary Card -->
+        <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950 text-white rounded-3xl p-6 sm:p-7 shadow-xl border border-slate-800 relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+            <div class="flex items-center gap-2">
+              <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-300">2026 Estimated Tax Savings</span>
+            </div>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              IRS Sched. 1-A
+            </span>
+          </div>
+
+          <div class="mb-6">
+            <div class="text-[11px] uppercase tracking-wider font-extrabold text-slate-400 mb-1">Total Annual Take-Home Boost</div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-4xl sm:text-5xl font-black font-mono tracking-tight text-emerald-400" id="totalSavingsDisplay">$0</span>
+              <span class="text-xs text-slate-400 font-bold" id="monthlyBoostDisplay">(+$0/mo)</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1.5" id="effectiveTaxRateText">
+              Based on estimated marginal federal & state tax rates.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/60">
+              <div class="text-[10px] text-slate-400 font-extrabold uppercase mb-1">Federal Exemption</div>
+              <div class="text-lg font-black font-mono text-white" id="fedSavingsDisplay">$0</div>
+              <div class="text-[10px] text-emerald-400/90 font-mono mt-0.5" id="fedRateDisplay">@ 22% bracket</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/60">
+              <div class="text-[10px] text-slate-400 font-extrabold uppercase mb-1">State Exemption</div>
+              <div class="text-lg font-black font-mono text-white" id="stateSavingsDisplay">$0</div>
+              <div class="text-[10px] text-emerald-400/90 font-mono mt-0.5" id="stateRateDisplay">@ 0% (TX)</div>
+            </div>
+          </div>
+
+          <!-- Deduction Breakdown Lines -->
+          <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-2.5 text-xs">
+            <div class="flex justify-between items-center text-slate-400">
+              <span>Gross OT Compensation:</span>
+              <span class="font-mono font-bold text-white" id="grossOtDisplay">$0</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-400">
+              <span>Gross Tipped Income:</span>
+              <span class="font-mono font-bold text-white" id="grossTipsDisplay">$0</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-400 border-t border-slate-800/80 pt-2">
+              <span>Total Qualified Deduction:</span>
+              <span class="font-mono font-bold text-emerald-300 text-sm" id="totalDeductionDisplay">$0</span>
+            </div>
+            <div class="flex justify-between items-center text-[11px] text-slate-400 pt-0.5">
+              <span>Phase-out Reduction:</span>
+              <span class="font-mono font-bold" id="phaseoutReductionDisplay">-$0 (0%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase-out Status Card -->
+        <div id="phaseoutCard" class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+          <div class="text-xl p-2 rounded-xl bg-emerald-50 text-emerald-700 font-bold shrink-0" id="phaseoutIcon">🛡️</div>
+          <div>
+            <div class="text-xs font-bold text-slate-900" id="phaseoutTitle">100% Eligible (Below Phase-out Cap)</div>
+            <p class="text-[11px] text-slate-500 mt-0.5 leading-relaxed" id="phaseoutDesc">
+              Your estimated AGI is below the phase-out limit. You qualify for 100% of allowed deductions.
+            </p>
+          </div>
+        </div>
+
+        <!-- State Conformity Card -->
+        <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm text-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-extrabold text-slate-800 flex items-center gap-1.5">
+              <span>📍</span> State Tax Conformity Status
+            </span>
+            <span class="font-mono font-bold text-slate-600" id="stateConformityMini">Texas (TX)</span>
+          </div>
+          <p class="text-[11px] text-slate-500 leading-relaxed" id="stateConformityDesc">
+            Texas imposes 0% state individual income tax. You receive full federal tax relief.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FAQ Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200">
+    <h2 class="text-xl font-black text-slate-900 mb-6 flex items-center gap-2">
+      <span>📚</span> 2026 IRS Schedule 1-A & OBBBA Key Rules
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs leading-relaxed">
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+        <div class="font-bold text-slate-900 text-sm mb-1.5 flex items-center gap-1.5">
+          <span>⏱️</span> Overtime Exemption Caps
+        </div>
+        <p class="text-slate-600">
+          The law exempts qualifying premium overtime pay up to a maximum cap of <strong>$12,500 for Single/HOH</strong> and <strong>$25,000 for Married Filing Jointly</strong>. The deduction is taken as an above-the-line adjustment on IRS Schedule 1-A.
+        </p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+        <div class="font-bold text-slate-900 text-sm mb-1.5 flex items-center gap-1.5">
+          <span>💵</span> Qualified Tipped Income
+        </div>
+        <p class="text-slate-600">
+          Voluntary cash and credit card tips received in eligible service occupations are exempt up to <strong>$25,000 per individual</strong>.
+        </p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+        <div class="font-bold text-slate-900 text-sm mb-1.5 flex items-center gap-1.5">
+          <span>📉</span> Phase-out Rules
+        </div>
+        <p class="text-slate-600">
+          Deductions phase out for Modified AGI exceeding <strong>$150,000 for Single</strong> and <strong>$300,000 for Married Filing Jointly</strong>, reducing allowable amounts until exhausted.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-500 py-8 px-4 text-center text-xs">
+    <div class="max-w-7xl mx-auto space-y-2">
+      <p class="font-bold text-slate-700">&copy; 2026 Overtime & Tips Tax Exemption Calculator (IRS Schedule 1-A).</p>
+      <p class="text-[11px] text-slate-400">Disclaimer: This tool is an educational estimator based on 2026 legislative statutes. Consult a tax professional for actual filing guidance.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript Calculation Engine -->
+  <script>
+    const STATE_DATA = {
+      "AL": { name: "Alabama", rate: 0.05, conforms: true, note: "Conforms to federal above-the-line deductions." },
+      "AK": { name: "Alaska", rate: 0.00, conforms: true, note: "No state individual income tax." },
+      "AZ": { name: "Arizona", rate: 0.025, conforms: true, note: "2.5% flat tax; conforms to federal AGI adjustments." },
+      "AR": { name: "Arkansas", rate: 0.039, conforms: true, note: "Conforms to federal deductions." },
+      "CA": { name: "California", rate: 0.093, conforms: false, note: "Non-conforming state; California does NOT exempt overtime/tips." },
+      "CO": { name: "Colorado", rate: 0.044, conforms: true, note: "Rolling conformity to federal taxable income." },
+      "CT": { name: "Connecticut", rate: 0.055, conforms: true, note: "State tax conforms to federal adjusted gross income." },
+      "DE": { name: "Delaware", rate: 0.066, conforms: true, note: "Conforms to federal Schedule 1-A deductions." },
+      "FL": { name: "Florida", rate: 0.00, conforms: true, note: "No state individual income tax." },
+      "GA": { name: "Georgia", rate: 0.0549, conforms: true, note: "5.49% flat tax; conforms to federal deductions." },
+      "HI": { name: "Hawaii", rate: 0.0825, conforms: false, note: "Decoupled state; Hawaii does NOT recognize Schedule 1-A exemption." },
+      "ID": { name: "Idaho", rate: 0.058, conforms: true, note: "Conforms to federal internal revenue code." },
+      "IL": { name: "Illinois", rate: 0.0495, conforms: true, note: "4.95% flat tax; uses federal AGI as starting point." },
+      "IN": { name: "Indiana", rate: 0.0305, conforms: true, note: "3.05% flat tax; conforms to federal adjusted income." },
+      "IA": { name: "Iowa", rate: 0.038, conforms: true, note: "Conforms to federal tax code updates." },
+      "KS": { name: "Kansas", rate: 0.057, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "KY": { name: "Kentucky", rate: 0.04, conforms: true, note: "4.0% flat tax; conforms to federal definitions." },
+      "LA": { name: "Louisiana", rate: 0.0425, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "ME": { name: "Maine", rate: 0.0715, conforms: true, note: "Conforms to federal taxable income." },
+      "MD": { name: "Maryland", rate: 0.0575, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "MA": { name: "Massachusetts", rate: 0.05, conforms: true, note: "5.0% flat tax; conforms to federal deductions." },
+      "MI": { name: "Michigan", rate: 0.0425, conforms: true, note: "4.25% flat tax; conforms to federal AGI." },
+      "MN": { name: "Minnesota", rate: 0.0785, conforms: false, note: "Selectively decoupled; pending state conformity bill." },
+      "MS": { name: "Mississippi", rate: 0.047, conforms: true, note: "4.7% flat tax; conforms to federal AGI." },
+      "MO": { name: "Missouri", rate: 0.048, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "MT": { name: "Montana", rate: 0.059, conforms: true, note: "Conforms to federal taxable income." },
+      "NE": { name: "Nebraska", rate: 0.0584, conforms: true, note: "Conforms to federal internal revenue code." },
+      "NV": { name: "Nevada", rate: 0.00, conforms: true, note: "No state individual income tax." },
+      "NH": { name: "New Hampshire", rate: 0.00, conforms: true, note: "No state wage income tax." },
+      "NJ": { name: "New Jersey", rate: 0.0637, conforms: false, note: "Gross income tax; NJ does NOT allow Schedule 1-A deductions." },
+      "NM": { name: "New Mexico", rate: 0.059, conforms: true, note: "Conforms to federal taxable income." },
+      "NY": { name: "New York", rate: 0.065, conforms: false, note: "Decoupled; New York does NOT conform to federal exemption." },
+      "NC": { name: "North Carolina", rate: 0.045, conforms: true, note: "4.5% flat tax; conforms to federal AGI." },
+      "ND": { name: "North Dakota", rate: 0.025, conforms: true, note: "Conforms to federal taxable income." },
+      "OH": { name: "Ohio", rate: 0.035, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "OK": { name: "Oklahoma", rate: 0.0475, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "OR": { name: "Oregon", rate: 0.0875, conforms: false, note: "Decoupled from federal exemption without state bill." },
+      "PA": { name: "Pennsylvania", rate: 0.0307, conforms: false, note: "3.07% flat gross tax; PA does not recognize Schedule 1-A deductions." },
+      "RI": { name: "Rhode Island", rate: 0.0599, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "SC": { name: "South Carolina", rate: 0.064, conforms: true, note: "Conforms to federal internal revenue code." },
+      "SD": { name: "South Dakota", rate: 0.00, conforms: true, note: "No state individual income tax." },
+      "TN": { name: "Tennessee", rate: 0.00, conforms: true, note: "No state individual income tax." },
+      "TX": { name: "Texas", rate: 0.00, conforms: true, note: "No state individual income tax." },
+      "UT": { name: "Utah", rate: 0.0465, conforms: true, note: "4.65% flat tax; conforms to federal AGI." },
+      "VT": { name: "Vermont", rate: 0.076, conforms: true, note: "Conforms to federal taxable income." },
+      "VA": { name: "Virginia", rate: 0.0575, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "WA": { name: "Washington", rate: 0.00, conforms: true, note: "No state individual income tax." },
+      "WV": { name: "West Virginia", rate: 0.0512, conforms: true, note: "Conforms to federal adjusted gross income." },
+      "WI": { name: "Wisconsin", rate: 0.053, conforms: false, note: "Decoupled pending state legislative review." },
+      "WY": { name: "Wyoming", rate: 0.00, conforms: true, note: "No state individual income tax." },
+      "DC": { name: "District of Columbia", rate: 0.065, conforms: true, note: "Conforms to federal adjusted gross income." }
+    };
+
+    function initStateSelect() {
+      const select = document.getElementById("stateSelect");
+      if (!select) return;
+      select.innerHTML = "";
+      Object.keys(STATE_DATA).sort().forEach(code => {
+        const opt = document.createElement("option");
+        opt.value = code;
+        opt.textContent = `${STATE_DATA[code].name} (${code}) ${STATE_DATA[code].rate === 0 ? "• 0% Tax" : "• " + (STATE_DATA[code].rate * 100).toFixed(1) + "%"}`;
+        if (code === "TX") opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function applyPreset(type) {
+      window.applyPreset = applyPreset;
+      if (type === "nurse") {
+        document.getElementById("hourlyWage").value = "42.00";
+        document.getElementById("otRate").value = "1.5";
+        document.getElementById("otHoursNum").value = "10";
+        document.getElementById("annualTipsNum").value = "0";
+        document.getElementById("annualAgiNum").value = "98000";
+        selectStatusCard("single");
+      } else if (type === "server") {
+        document.getElementById("hourlyWage").value = "16.00";
+        document.getElementById("otRate").value = "1.5";
+        document.getElementById("otHoursNum").value = "2";
+        document.getElementById("annualTipsNum").value = "12000";
+        document.getElementById("annualAgiNum").value = "48000";
+        selectStatusCard("single");
+      } else if (type === "trades") {
+        document.getElementById("hourlyWage").value = "38.00";
+        document.getElementById("otRate").value = "1.5";
+        document.getElementById("otHoursNum").value = "12";
+        document.getElementById("annualTipsNum").value = "0";
+        document.getElementById("annualAgiNum").value = "105000";
+        selectStatusCard("single");
+      } else if (type === "logistics") {
+        document.getElementById("hourlyWage").value = "26.00";
+        document.getElementById("otRate").value = "1.5";
+        document.getElementById("otHoursNum").value = "15";
+        document.getElementById("annualTipsNum").value = "0";
+        document.getElementById("annualAgiNum").value = "74000";
+        selectStatusCard("single");
+      }
+      syncInputs();
+      calculate();
+    };
+
+    function setTips(amount) {
+      window.setTips = setTips;
+      document.getElementById("annualTipsNum").value = amount;
+      document.getElementById("annualTips").value = amount;
+      calculate();
+    };
+
+    function selectStatusCard(status) {
+      window.selectStatusCard = selectStatusCard;
+      document.getElementById("filingStatusSelect").value = status;
+      ["single", "mfj", "hoh", "mfs"].forEach(s => {
+        const card = document.getElementById("cardStatus_" + s);
+        if (card) {
+          if (s === status) {
+            card.className = "p-3 rounded-xl border border-emerald-500 bg-emerald-50/70 ring-2 ring-emerald-500/20 cursor-pointer text-center transition";
+          } else {
+            card.className = "p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer text-center transition";
+          }
+        }
+      });
+      calculate();
+    };
+
+    function syncInputs() {
+      const agiNum = document.getElementById("annualAgiNum");
+      const agiRange = document.getElementById("annualAgi");
+      if (agiRange && agiNum) agiRange.value = agiNum.value;
+
+      const otNum = document.getElementById("otHoursNum");
+      const otRange = document.getElementById("otHours");
+      if (otRange && otNum) otRange.value = otNum.value;
+
+      const tipsNum = document.getElementById("annualTipsNum");
+      const tipsRange = document.getElementById("annualTips");
+      if (tipsRange && tipsNum) tipsRange.value = tipsNum.value;
+    }
+
+    function estimateFederalMarginalRate(taxableIncome, status) {
+      if (status === "mfj") {
+        if (taxableIncome <= 24000) return 0.10;
+        if (taxableIncome <= 96000) return 0.12;
+        if (taxableIncome <= 206000) return 0.22;
+        if (taxableIncome <= 394000) return 0.24;
+        if (taxableIncome <= 500000) return 0.32;
+        return 0.35;
+      } else {
+        if (taxableIncome <= 12000) return 0.10;
+        if (taxableIncome <= 48000) return 0.12;
+        if (taxableIncome <= 103000) return 0.22;
+        if (taxableIncome <= 197000) return 0.24;
+        if (taxableIncome <= 250000) return 0.32;
+        return 0.35;
+      }
+    }
+
+    function calculate() {
+      window.calculate = calculate;
+      const status = document.getElementById("filingStatusSelect").value;
+      const stateCode = document.getElementById("stateSelect").value || "TX";
+      const state = STATE_DATA[stateCode] || { name: stateCode, rate: 0, conforms: true, note: "" };
+
+      const hourly = parseFloat(document.getElementById("hourlyWage").value) || 0;
+      const otMultiplier = parseFloat(document.getElementById("otRate").value) || 1.5;
+      const otWeeklyHours = parseFloat(document.getElementById("otHoursNum").value) || 0;
+      const annualTips = parseFloat(document.getElementById("annualTipsNum").value) || 0;
+      const agi = parseFloat(document.getElementById("annualAgiNum").value) || 0;
+
+      const annualOtHours = otWeeklyHours * 52;
+      document.getElementById("otAnnualHoursSub").textContent = `${Math.round(annualOtHours)} hours annually`;
+      const grossOtPay = annualOtHours * (hourly * otMultiplier);
+
+      const otMaxCap = (status === "mfj") ? 25000 : 12500;
+      document.getElementById("otCapBadge").textContent = `Max $${otMaxCap.toLocaleString()} Cap`;
+      const qualifiedOtDeduction = Math.min(grossOtPay, otMaxCap);
+
+      const tipsMaxCap = 25000;
+      const qualifiedTipsDeduction = Math.min(annualTips, tipsMaxCap);
+
+      let phaseoutThreshold = 150000;
+      let phaseoutRange = 50000;
+      if (status === "mfj") {
+        phaseoutThreshold = 300000;
+        phaseoutRange = 100000;
+      } else if (status === "mfs") {
+        phaseoutThreshold = 75000;
+        phaseoutRange = 25000;
+      }
+      let phaseoutFraction = 0;
+      if (agi > phaseoutThreshold) {
+        phaseoutFraction = Math.min(1, (agi - phaseoutThreshold) / phaseoutRange);
+      }
+
+      const totalBaseDeduction = qualifiedOtDeduction + qualifiedTipsDeduction;
+      const phaseoutReductionAmount = totalBaseDeduction * phaseoutFraction;
+      const finalFederalDeduction = Math.max(0, totalBaseDeduction - phaseoutReductionAmount);
+
+      const fedMarginalRate = estimateFederalMarginalRate(agi, status);
+      const fedSavings = finalFederalDeduction * fedMarginalRate;
+
+      let stateSavings = 0;
+      if (state.conforms && state.rate > 0) {
+        stateSavings = finalFederalDeduction * state.rate;
+      }
+
+      const totalSavings = fedSavings + stateSavings;
+      const monthlySavings = totalSavings / 12;
+
+      document.getElementById("totalSavingsDisplay").textContent = `$${Math.round(totalSavings).toLocaleString()}`;
+      document.getElementById("monthlyBoostDisplay").textContent = `(+${Math.round(monthlySavings).toLocaleString()}/mo)`;
+      document.getElementById("fedSavingsDisplay").textContent = `$${Math.round(fedSavings).toLocaleString()}`;
+      document.getElementById("fedRateDisplay").textContent = `@ ${(fedMarginalRate * 100).toFixed(0)}% marginal rate`;
+
+      if (state.rate === 0) {
+        document.getElementById("stateSavingsDisplay").textContent = "$0";
+        document.getElementById("stateRateDisplay").textContent = "0% (No Income Tax)";
+      } else if (!state.conforms) {
+        document.getElementById("stateSavingsDisplay").textContent = "$0";
+        document.getElementById("stateRateDisplay").textContent = `Non-conforming (${(state.rate * 100).toFixed(1)}%)`;
+      } else {
+        document.getElementById("stateSavingsDisplay").textContent = `$${Math.round(stateSavings).toLocaleString()}`;
+        document.getElementById("stateRateDisplay").textContent = `@ ${(state.rate * 100).toFixed(1)}% (${stateCode})`;
+      }
+
+      document.getElementById("grossOtDisplay").textContent = `$${Math.round(grossOtPay).toLocaleString()}`;
+      document.getElementById("grossTipsDisplay").textContent = `$${Math.round(annualTips).toLocaleString()}`;
+      document.getElementById("totalDeductionDisplay").textContent = `$${Math.round(finalFederalDeduction).toLocaleString()}`;
+      
+      const reductionPercent = (phaseoutFraction * 100).toFixed(0);
+      document.getElementById("phaseoutReductionDisplay").textContent = `-$${Math.round(phaseoutReductionAmount).toLocaleString()} (${reductionPercent}%)`;
+      document.getElementById("phaseoutReductionDisplay").className = phaseoutFraction > 0 ? "font-mono font-bold text-rose-400" : "font-mono font-bold text-slate-300";
+
+      const phaseoutTitle = document.getElementById("phaseoutTitle");
+      const phaseoutDesc = document.getElementById("phaseoutDesc");
+      const phaseoutIcon = document.getElementById("phaseoutIcon");
+      if (phaseoutFraction === 0) {
+        phaseoutTitle.textContent = "100% Eligible (Below Phase-out Cap)";
+        phaseoutTitle.className = "text-xs font-bold text-emerald-900";
+        phaseoutDesc.textContent = `Your estimated AGI ($${agi.toLocaleString()}) is below the $${phaseoutThreshold.toLocaleString()} threshold. Full deductions applied.`;
+        phaseoutIcon.textContent = "🛡️";
+        phaseoutIcon.className = "text-xl p-2 rounded-xl bg-emerald-50 text-emerald-700 font-bold shrink-0";
+      } else if (phaseoutFraction < 1) {
+        phaseoutTitle.textContent = `Partial Phase-out Applied (${reductionPercent}% Reduction)`;
+        phaseoutTitle.className = "text-xs font-bold text-amber-900";
+        phaseoutDesc.textContent = `Your AGI ($${agi.toLocaleString()}) exceeds the $${phaseoutThreshold.toLocaleString()} threshold. Allowable deduction is reduced by $${Math.round(phaseoutReductionAmount).toLocaleString()}.`;
+        phaseoutIcon.textContent = "⚠️";
+        phaseoutIcon.className = "text-xl p-2 rounded-xl bg-amber-50 text-amber-700 font-bold shrink-0";
+      } else {
+        phaseoutTitle.textContent = "100% Phased Out (Exceeds Income Limit)";
+        phaseoutTitle.className = "text-xs font-bold text-rose-900";
+        phaseoutDesc.textContent = `Your AGI ($${agi.toLocaleString()}) exceeds the phase-out limit ($${(phaseoutThreshold + phaseoutRange).toLocaleString()}). No Schedule 1-A deduction allowed.`;
+        phaseoutIcon.textContent = "🚫";
+        phaseoutIcon.className = "text-xl p-2 rounded-xl bg-rose-50 text-rose-700 font-bold shrink-0";
+      }
+
+      document.getElementById("stateConformityTitle").textContent = `${state.name} (${stateCode})`;
+      document.getElementById("stateConformityMini").textContent = `${state.name} (${stateCode})`;
+      document.getElementById("stateConformityDesc").textContent = state.note;
+
+      const stateTag = document.getElementById("stateConformityTag");
+      if (state.rate === 0) {
+        stateTag.textContent = "0% No Income Tax";
+        stateTag.className = "px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-200/70 text-emerald-900";
+      } else if (state.conforms) {
+        stateTag.textContent = `Conforming (${(state.rate * 100).toFixed(1)}%)`;
+        stateTag.className = "px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-800";
+      } else {
+        stateTag.textContent = "Non-Conforming State";
+        stateTag.className = "px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-200/80 text-amber-900";
+      }
+    };
+
+    window.applyPreset = applyPreset;
+    window.setTips = setTips;
+    window.selectStatusCard = selectStatusCard;
+    window.calculate = calculate;
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initStateSelect();
+
+      document.getElementById("filingStatusSelect").addEventListener("change", (e) => {
+        selectStatusCard(e.target.value);
+      });
+
+      document.getElementById("stateSelect").addEventListener("change", calculate);
+      document.getElementById("hourlyWage").addEventListener("input", calculate);
+      document.getElementById("otRate").addEventListener("change", calculate);
+
+      const agiNum = document.getElementById("annualAgiNum");
+      const agiRange = document.getElementById("annualAgi");
+      agiNum.addEventListener("input", () => { agiRange.value = agiNum.value; calculate(); });
+      agiRange.addEventListener("input", () => { agiNum.value = agiRange.value; calculate(); });
+
+      const otNum = document.getElementById("otHoursNum");
+      const otRange = document.getElementById("otHours");
+      otNum.addEventListener("input", () => { otRange.value = otNum.value; calculate(); });
+      otRange.addEventListener("input", () => { otNum.value = otRange.value; calculate(); });
+
+      const tipsNum = document.getElementById("annualTipsNum");
+      const tipsRange = document.getElementById("annualTips");
+      tipsNum.addEventListener("input", () => { tipsRange.value = tipsNum.value; calculate(); });
+      tipsRange.addEventListener("input", () => { tipsNum.value = tipsRange.value; calculate(); });
+
+      calculate();
+    });
+  </script>
+</body>
+</html>

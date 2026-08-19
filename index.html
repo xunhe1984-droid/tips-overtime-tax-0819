@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 US Overtime & Tips Tax Exemption Calculator | IRS Schedule 1-A (OBBBA)</title>
+  <meta name="description" content="Calculate your exact federal and state take-home pay boost under the No Tax on Tips & Overtime law, Schedule 1-A deductions, and 50-state conformity.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              900: '#064e3b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    input[type=range]:focus { outline: none; }
+    input[type=range]::-webkit-slider-runnable-track {
+      background: #e2e8f0;
+      height: 8px;
+      border-radius: 9999px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      margin-top: -6px;
+      background-color: #059669;
+      height: 20px;
+      width: 20px;
+      border-radius: 9999px;
+      border: 3px solid #ffffff;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      transition: transform 0.1s ease, background-color 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      background-color: #047857;
+    }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- 顶部通知栏 -->
+  <aside class="bg-slate-950 text-slate-300 text-xs py-2.5 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-brand-500/10 text-emerald-400 border border-emerald-400/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
+          IRS Schedule 1-A (OBBBA Reform)
+        </span>
+        <span class="text-[11px] sm:text-xs text-slate-300 font-medium">
+          New Above-the-Line Tax Deduction for Qualified Overtime & Tips (2025–2028)
+        </span>
+      </div>
+      <div class="flex items-center gap-4 text-[11px] text-slate-400">
+        <a href="#state-matrix" class="text-emerald-400 hover:text-emerald-300 font-semibold underline underline-offset-2 transition">
+          50-State Rules Matrix &rarr;
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 顶部导航栏 -->
+  <header class="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200/90 shadow-2xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-teal-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 font-bold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-lg text-slate-900 tracking-tight">TaxCompass</span>
+            <span class="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-brand-100 text-brand-900 border border-brand-200">
+              PRO 2026
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium leading-none">Schedule 1-A Overtime & Tips Calculator</p>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-7 text-xs font-bold text-slate-600">
+        <a href="#calculator" class="text-brand-700 hover:text-brand-800 transition">Tax Estimator</a>
+        <a href="#paycheck-stub" class="hover:text-slate-900 transition">Paycheck Simulator</a>
+        <a href="#schedule-1a-form" class="hover:text-slate-900 transition">Schedule 1-A Breakdown</a>
+        <a href="#state-matrix" class="hover:text-slate-900 transition">50-State Conformity</a>
+      </nav>
+
+      <a href="#calculator" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-extrabold shadow-sm transition shadow-brand-600/20">
+        <span>Calculate Savings</span> &darr;
+      </a>
+    </div>
+  </header>
+
+  <!-- 主视觉区与快捷预设 -->
+  <section class="bg-gradient-to-b from-white via-slate-50 to-[#f8fafc] pt-10 pb-8 border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200/80 text-brand-900 text-xs font-bold mb-3.5">
+          <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+          <span>Verified for 2026 Tax Season & IRS Form W-2 Box 14</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          How much will you save with <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-teal-500">No Tax on Tips & Overtime</span>?
+        </h1>
+        <p class="mt-3 text-slate-600 text-xs sm:text-sm sm:leading-relaxed">
+          The One Big Beautiful Bill Act (OBBBA) introduces an above-the-line deduction on <strong>IRS Schedule 1-A</strong>. Calculate your exact federal and state take-home pay boost, deduction caps ($12,500 Single / $25,000 MFJ), phase-out thresholds, and state tax rules.
+        </p>
+      </div>
+
+      <div class="mt-8 pt-5 border-t border-slate-200/80">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">
+            ⚡ Quick-Load Occupation Presets:
+          </span>
+          <span class="text-[11px] text-slate-400">Click to automatically populate realistic wages & hours</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <button type="button" onclick="applyPreset('nurse')" class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white hover:bg-emerald-50/60 border border-slate-200 hover:border-emerald-300 text-left transition shadow-2xs group cursor-pointer">
+            <span class="text-xl p-1.5 rounded-lg bg-emerald-100/60 group-hover:scale-110 transition-transform">🏥</span>
+            <div>
+              <div class="text-xs font-bold text-slate-900">Hospital Nurse</div>
+              <div class="text-[10px] text-slate-500 font-mono">$42/hr &bull; 10h OT/wk</div>
+            </div>
+          </button>
+
+          <button type="button" onclick="applyPreset('server')" class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white hover:bg-emerald-50/60 border border-slate-200 hover:border-emerald-300 text-left transition shadow-2xs group cursor-pointer">
+            <span class="text-xl p-1.5 rounded-lg bg-amber-100/60 group-hover:scale-110 transition-transform">🍽️</span>
+            <div>
+              <div class="text-xs font-bold text-slate-900">Restaurant Server</div>
+              <div class="text-[10px] text-slate-500 font-mono">$16/hr &bull; $9k Tips</div>
+            </div>
+          </button>
+
+          <button type="button" onclick="applyPreset('trades')" class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white hover:bg-emerald-50/60 border border-slate-200 hover:border-emerald-300 text-left transition shadow-2xs group cursor-pointer">
+            <span class="text-xl p-1.5 rounded-lg bg-teal-100/60 group-hover:scale-110 transition-transform">⚡</span>
+            <div>
+              <div class="text-xs font-bold text-slate-900">Electrician / Trades</div>
+              <div class="text-[10px] text-slate-500 font-mono">$38/hr &bull; 12h OT/wk</div>
+            </div>
+          </button>
+
+          <button type="button" onclick="applyPreset('logistics')" class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white hover:bg-emerald-50/60 border border-slate-200 hover:border-emerald-300 text-left transition shadow-2xs group cursor-pointer">
+            <span class="text-xl p-1.5 rounded-lg bg-indigo-100/60 group-hover:scale-110 transition-transform">🚛</span>
+            <div>
+              <div class="text-xs font-bold text-slate-900">Trucking / Warehouse</div>
+              <div class="text-[10px] text-slate-500 font-mono">$26/hr &bull; 15h OT/wk</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 计算器核心工作区 -->
+  <main id="calculator" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- 左侧：输入控制器 (7 栏) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm transition-all hover:shadow-md">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-xs border border-emerald-200">
+                1
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-slate-900">Filing Status & Residence State</h2>
+                <p class="text-[11px] text-slate-400">Determines deduction limits & state tax rules</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-mono">
+              Form 1040
+            </span>
+          </div>
+
+          <!-- Filing Status 选择器与联动卡片 -->
+          <div class="mb-5">
+            <label for="filingStatusSelect" class="block text-xs font-extrabold text-slate-700 mb-2">
+              Select Filing Status (Tax Bracket & Phase-out Threshold)
+            </label>
+            
+            <select id="filingStatusSelect" class="w-full bg-slate-50 hover:bg-slate-100/80 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition cursor-pointer">
+              <option value="single">Single Filer ($150,000 Phaseout Cap • $12,500 OT Cap)</option>
+              <option value="mfj">Married Filing Jointly ($300,000 Phaseout Cap • $25,000 OT Cap)</option>
+              <option value="hoh">Head of Household ($150,000 Phaseout Cap • $12,500 OT Cap)</option>
+              <option value="mfs">Married Filing Separately ($75,000 Phaseout Cap • $12,500 OT Cap)</option>
+            </select>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+              <div onclick="selectStatusCard('single')" id="cardStatus_single" class="p-3 rounded-xl border border-emerald-500 bg-emerald-50/70 ring-2 ring-emerald-500/20 cursor-pointer text-center transition">
+                <div class="text-xs font-bold text-slate-900">Single</div>
+                <div class="text-[10px] text-emerald-800 font-bold mt-0.5">$150k Cap</div>
+              </div>
+              <div onclick="selectStatusCard('mfj')" id="cardStatus_mfj" class="p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer text-center transition">
+                <div class="text-xs font-bold text-slate-900">Married (MFJ)</div>
+                <div class="text-[10px] text-slate-500 font-medium mt-0.5">$300k Cap</div>
+              </div>
+              <div onclick="selectStatusCard('hoh')" id="cardStatus_hoh" class="p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer text-center transition">
+                <div class="text-xs font-bold text-slate-900">Head of House</div>
+                <div class="text-[10px] text-slate-500 font-medium mt-0.5">$150k Cap</div>
+              </div>
+              <div onclick="selectStatusCard('mfs')" id="cardStatus_mfs" class="p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer text-center transition">
+                <div class="text-xs font-bold text-slate-900">Separate (MFS)</div>
+                <div class="text-[10px] text-slate-500 font-medium mt-0.5">$75k Cap</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 州选择与状态 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="stateSelect" class="block text-xs font-extrabold text-slate-700 mb-1.5">
+                Your State of Residence
+              </label>
+              <select id="stateSelect" class="w-full bg-slate-50 hover:bg-slate-100/80 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition cursor-pointer">
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-extrabold text-slate-700 mb-1.5">
+                State Conformity Status
+              </label>
+              <div id="stateConformityBanner" class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs">
+                <span class="font-bold text-emerald-900" id="stateConformityTitle">Texas (TX)</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-200/70 text-emerald-900" id="stateConformityTag">0% No Income Tax</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 年收入双向输入 -->
+          <div class="mt-6 pt-5 border-t border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <label for="annualAgiNum" class="text-xs font-extrabold text-slate-700">
+                  Total Annual Income (Estimated AGI)
+                </label>
+                <p class="text-[10px] text-slate-400">Total gross earnings used to test phase-out reductions</p>
+              </div>
+              <div class="relative w-32">
+                <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-400 font-mono text-xs">$</span>
+                <input type="number" id="annualAgiNum" value="65000" min="10000" max="600000" step="1000" class="w-full bg-slate-100 border border-slate-300 rounded-lg pl-6 pr-2 py-1 text-xs font-mono font-bold text-slate-900 text-right focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+              </div>
+            </div>
+            <input type="range" id="annualAgi" min="15000" max="400000" step="2500" value="65000" class="w-full">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1 font-mono">
+              <span>$15k</span>
+              <span class="text-emerald-700 font-bold">$75k</span>
+              <span class="text-amber-600 font-bold">$150k (Single Cap)</span>
+              <span class="text-amber-700 font-bold">$300k (MFJ Cap)</span>
+              <span>$400k+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 2：加班费双向输入 -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm transition-all hover:shadow-md">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-xs border border-teal-200">
+                2
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-slate-900">Overtime Compensation (FLSA Qualified)</h2>
+                <p class="text-[11px] text-slate-400">Schedule 1-A Part III & Form W-2 Box 14</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-teal-100 text-teal-800 font-mono" id="otCapBadge">
+              Max $12,500 Cap
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="hourlyWage" class="block text-xs font-extrabold text-slate-700 mb-1.5">
+                Regular Hourly Base Rate ($/hr)
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 font-mono font-bold text-xs">$</span>
+                <input type="number" id="hourlyWage" value="28.00" min="7.25" max="250" step="0.5" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-8 pr-3.5 py-2.5 text-xs font-mono font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition">
+              </div>
+            </div>
+
+            <div>
+              <label for="otRate" class="block text-xs font-extrabold text-slate-700 mb-1.5">
+                Overtime Multiplier Rate
+              </label>
+              <select id="otRate" class="w-full bg-slate-50 hover:bg-slate-100/80 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition cursor-pointer">
+                <option value="1.5">1.5x (FLSA Time-and-a-Half Standard)</option>
+                <option value="2.0">2.0x (Double-Time Holiday/Weekend)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <label for="otHoursNum" class="text-xs font-extrabold text-slate-700">
+                  Average Overtime Hours per Week
+                </label>
+                <span class="text-[10px] text-slate-400 block" id="otAnnualHoursSub">416 hours annually</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <input type="number" id="otHoursNum" value="8" min="0" max="60" step="1" class="w-20 bg-slate-100 border border-slate-300 rounded-lg px-2 py-1 text-xs font-mono font-bold text-teal-800 text-right focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                <span class="text-xs text-slate-500 font-bold">hrs/wk</span>
+              </div>
+            </div>
+            <input type="range"
